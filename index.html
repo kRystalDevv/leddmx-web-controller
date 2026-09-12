@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f5f5f7">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <title>LEDDMX easy controls</title>
+  <link rel="stylesheet" href="assets/css/shared.css">
+  <link rel="stylesheet" href="assets/css/home.css">
+</head>
+<body class="page-home">
+  <a class="skip-link" href="#controls">Skip to controls</a>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar" aria-label="LEDDMX navigation">
+      <div class="brand">
+        <div class="brand-bulb"><svg class="icon lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18h6"/><path d="M10 21h4"/><path d="M8.2 14.5A6 6 0 1 1 15.8 14.5c-.9.8-1.3 1.5-1.4 2.5H9.6c-.1-1-.5-1.7-1.4-2.5Z"/><path d="M12 2V1"/><path d="m4.9 4.9-.8-.8"/><path d="M2 12H1"/><path d="m19.1 4.9.8-.8"/><path d="M22 12h1"/></svg></div>
+        <div><strong>LEDDMX</strong><small>easy controls</small></div>
+      </div>
+      <nav class="nav" aria-label="Primary navigation">
+        <a class="active" href="index.html" aria-current="page"><span class="ico"><svg class="icon sm" viewBox="0 0 24 24" aria-hidden="true"><path d="m3 10 9-7 9 7"/><path d="M5 9.5V21h14V9.5"/><path d="M9 21v-7h6v7"/></svg></span>Controls</a>
+        <a href="#scenes"><span class="ico"><svg class="icon sm" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></span>Scenes</a>
+        <a href="#device"><span class="ico"><svg class="icon sm" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="18" height="12" rx="2.5"/><path d="M7 10h6"/><circle cx="17" cy="12" r="1"/><circle cx="20" cy="12" r=".8"/></svg></span>Devices</a>
+        <a href="advanced.html"><span class="ico"><svg class="icon sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .34 1.88l.06.06-2.83 2.83-.06-.06A1.7 1.7 0 0 0 15 19.4a1.7 1.7 0 0 0-1 .6 1.7 1.7 0 0 0-.4 1.1V21h-4v-.1A1.7 1.7 0 0 0 8.6 19.4a1.7 1.7 0 0 0-1.88.34l-.06.06-2.83-2.83.06-.06A1.7 1.7 0 0 0 4.6 15a1.7 1.7 0 0 0-.6-1 1.7 1.7 0 0 0-1.1-.4H3v-4h.1A1.7 1.7 0 0 0 4.6 8.6a1.7 1.7 0 0 0-.34-1.88l-.06-.06 2.83-2.83.06.06A1.7 1.7 0 0 0 9 4.6a1.7 1.7 0 0 0 1-.6 1.7 1.7 0 0 0 .4-1.1V3h4v.1A1.7 1.7 0 0 0 15.4 4.6a1.7 1.7 0 0 0 1.88-.34l.06-.06 2.83 2.83-.06.06A1.7 1.7 0 0 0 19.4 9c.13.37.35.7.65.96.3.25.68.39 1.08.4H21v4h-.1A1.7 1.7 0 0 0 19.4 15Z"/></svg></span>Advanced</a>
+      </nav>
+      <div class="sidebar-spacer"></div>
+      <div class="sidebar-footer">LEDDMX v2.0</div>
+    </aside>
+
+    <button class="sidebar-overlay" id="sidebar-overlay" type="button" aria-label="Close navigation"></button>
+
+    <main class="main" id="controls" tabindex="-1">
+      <noscript><p class="noscript-notice">JavaScript is required to connect to and control the LEDDMX light.</p></noscript>
+      <div class="app-topbar">
+        <button class="menu-button" id="menu-toggle" type="button" aria-label="Toggle navigation" aria-controls="sidebar" aria-expanded="false"><svg class="icon lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+        <div class="topbar-brand"><div class="brand-bulb"><svg class="icon lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18h6"/><path d="M10 21h4"/><path d="M8.2 14.5A6 6 0 1 1 15.8 14.5c-.9.8-1.3 1.5-1.4 2.5H9.6c-.1-1-.5-1.7-1.4-2.5Z"/><path d="M12 2V1"/><path d="m4.9 4.9-.8-.8"/><path d="M2 12H1"/><path d="m19.1 4.9.8-.8"/><path d="M22 12h1"/></svg></div><div><strong>LEDDMX</strong><small>easy controls</small></div></div>
+        <div class="topbar-spacer"></div>
+      </div>
+
+      <section class="device-card" id="device">
+        <div class="device-info">
+          <div class="device-render" aria-hidden="true"></div>
+          <div class="device-copy">
+            <h1 id="device-name">LEDDMX light</h1>
+            <div class="model">8-Channel LED Controller</div>
+            <p id="status" role="status"><span class="live-dot"></span>Not connected</p>
+          </div>
+        </div>
+        <div class="device-actions">
+          <div class="connection-actions">
+            <button id="connect" class="primary" type="button">Connect</button>
+            <button id="reconnect" class="secondary" type="button">Reconnect</button>
+            <button id="disconnect" class="danger" type="button" disabled>Disconnect</button>
+          </div>
+          <div class="power-control"><span>Power</span><button id="power-toggle" class="power-toggle" type="button" role="switch" aria-checked="false" aria-pressed="false" aria-label="Power" disabled></button></div>
+        </div>
+      </section>
+
+      <section id="scenes">
+        <div class="section-row"><h2>Quick scenes</h2></div>
+        <div class="scenes" aria-label="Quick lighting scenes">
+          <button class="scene warm" type="button" data-scene-colour="#FFD39A" data-scene-brightness="88"><svg class="icon scene-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg><strong>Warm White</strong></button>
+          <button class="scene cool" type="button" data-scene-colour="#DCEEFF" data-scene-brightness="100"><svg class="icon scene-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg><strong>Cool White</strong></button>
+          <button class="scene sunset" type="button" data-scene-colour="#FF704D" data-scene-brightness="78"><svg class="icon scene-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 18h18"/><path d="M5 14h14"/><path d="M7 14a5 5 0 0 1 10 0"/><path d="M12 3v3M4.9 6.5 7 8M19.1 6.5 17 8"/></svg><strong>Sunset</strong></button>
+          <button class="scene ocean" type="button" data-scene-colour="#1A9BFF" data-scene-brightness="85"><svg class="icon scene-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 14c2.2 0 2.2-2 4.4-2s2.2 2 4.4 2 2.2-2 4.4-2 2.2 2 4.4 2 2.2-2 4.4-2"/><path d="M2 18c2.2 0 2.2-2 4.4-2s2.2 2 4.4 2 2.2-2 4.4-2 2.2 2 4.4 2 2.2-2 4.4-2"/></svg><strong>Ocean</strong></button>
+          <button class="scene forest" type="button" data-scene-colour="#39B86F" data-scene-brightness="72"><svg class="icon scene-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3-5 7h3l-4 6h5v5h2v-5h5l-4-6h3l-5-7Z"/></svg><strong>Forest</strong></button>
+          <button class="scene party" type="button" data-scene-colour="#C04DFF" data-scene-effect="3" data-scene-speed="65" data-scene-brightness="100"><svg class="icon scene-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 1.2 3.8L17 8l-3.8 1.2L12 13l-1.2-3.8L7 8l3.8-1.2L12 3Z"/><path d="m19 13 .7 2.3L22 16l-2.3.7L19 19l-.7-2.3L16 16l2.3-.7L19 13Z"/></svg><strong>Party</strong></button>
+          <button class="scene custom" type="button" id="custom-scene"><svg class="icon scene-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg><strong>Custom</strong></button>
+        </div>
+      </section>
+
+      <div class="dashboard-grid">
+        <section class="card" id="colour-section">
+          <div class="card-head"><div class="section-icon"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18h1.5a1.5 1.5 0 0 0 0-3H12a2 2 0 0 1 0-4h2.5A5.5 5.5 0 0 0 20 8.5C20 5.5 16.4 3 12 3Z"/><circle cx="7.5" cy="10" r=".8"/><circle cx="10" cy="6.8" r=".8"/><circle cx="14" cy="6.5" r=".8"/><circle cx="17" cy="9" r=".8"/></svg></div><div><h2>Colour</h2><p>Choose a colour for your LED strip and preview it instantly.</p></div></div>
+          <div class="colour-layout">
+            <div class="colour-wheel-wrap">
+              <div class="colour-wheel" id="colour-wheel" role="slider" tabindex="0" aria-label="Colour wheel. Left and right change hue. Up and down change saturation." aria-valuetext="#FF004C">
+                <canvas id="colour-wheel-canvas" aria-hidden="true"></canvas>
+                <span class="wheel-thumb" id="wheel-thumb" aria-hidden="true"></span>
+              </div>
+              <input id="colour" type="color" value="#ff004c" aria-label="Choose a whole-strip colour">
+            </div>
+            <div class="colour-tools">
+              <div class="quick-title">Quick colours</div>
+              <div id="swatches" class="swatches" aria-label="Quick colours"></div>
+              <div class="colour-field">
+                <div class="fake-input"><span id="chosen-dot"></span><span id="hex-value">#FF004C</span></div>
+                <button class="eyedropper secondary" type="button" id="pick-colour" aria-label="Open colour picker"><svg class="icon sm" viewBox="0 0 24 24" aria-hidden="true"><path d="m14.5 5.5 4 4"/><path d="M4 20h4l10.8-10.8a2.8 2.8 0 0 0-4-4L4 16v4Z"/><path d="m11 9 4 4"/></svg></button>
+              </div>
+              <div class="preview-label preview-label-tight">Changes apply live while connected.</div>
+            </div>
+          </div>
+          <div class="preview-label">Live preview</div>
+          <div class="live-preview" aria-hidden="true"></div>
+        </section>
+
+        <section class="card" id="effect-section">
+          <div class="card-head"><div class="section-icon purple"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 1.4 4.2L18 8l-4.6 1.8L12 14l-1.4-4.2L6 8l4.6-1.8L12 2Z"/><path d="m19 14 .8 2.2L22 17l-2.2.8L19 20l-.8-2.2L16 17l2.2-.8L19 14Z"/><path d="m5 15 .6 1.7 1.7.6-1.7.6L5 20l-.6-2.1-1.7-.6 1.7-.6L5 15Z"/></svg></div><div><h2>Effect</h2><p>Choose a dynamic effect and fine-tune how it looks.</p></div></div>
+          <label>Effect<select id="mode"></select></label>
+          <div class="slider-block"><div class="slider-label"><span>Speed</span><output id="speed-value">50%</output></div><input id="speed" type="range" min="0" max="100" value="50"></div>
+          <div class="slider-block"><div class="slider-label"><span>Brightness</span><output id="brightness-value">100%</output></div><input id="brightness" type="range" min="0" max="100" value="100"></div>
+          <p id="effect-summary" class="effect-summary">Mode 1 / Forward Dreaming / 50% speed / 100% brightness</p>
+          <div class="action-row"><button id="start-effect" class="primary" type="button" disabled>Start effect</button></div>
+        </section>
+      </div>
+
+      <section class="card music-card" id="music-section">
+        <div class="card-head"><div class="section-icon music"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18V5l10-2v13"/><circle cx="6.5" cy="18.5" r="2.5"/><circle cx="16.5" cy="16.5" r="2.5"/></svg></div><div><h2>Music reaction</h2><p>Make your lights dance to music from your microphone or shared playback.</p></div></div>
+        <div class="music-grid">
+          <div class="music-fields">
+            <label>Audio source<select id="audio-source"><option value="microphone">Microphone (Default)</option><option value="system">Browser tab / system audio</option></select></label>
+            <label>Reaction style<select id="music-style"><option value="0">Colour pulse</option><option value="1">Colour cycle</option><option value="2">Beat flash</option><option value="3">Deep pulse</option><option value="4">Volume brightness</option><option value="5">Warm fire pulse</option><option value="6">Ocean pulse</option></select></label>
+          </div>
+          <details class="music-advanced" id="music-advanced" open>
+            <summary>Advanced controls</summary>
+            <div class="music-advanced-inner">
+              <div class="music-sliders">
+                <div class="mini-slider"><label for="music-sensitivity">Reaction sensitivity</label><input id="music-sensitivity" type="range" min="0" max="100" value="55"><output id="music-sensitivity-value">Balanced</output></div>
+                <div class="mini-slider"><label for="music-detail">Reaction detail</label><input id="music-detail" type="range" min="8" max="64" step="1" value="32"><output id="music-detail-value">32 levels</output></div>
+                <div class="mini-slider"><label for="music-smoothness">Colour fade</label><input id="music-smoothness" type="range" min="0" max="100" value="60"><output id="music-smoothness-value">60%</output></div>
+              </div>
+              <div class="audio-box">
+                <div class="audio-box-title">Audio input</div>
+                <div class="meter" aria-label="Audio input level"><div id="music-meter"></div></div>
+                <p id="music-state" aria-live="polite">Audio reaction is off. Start it to see the input meter.</p>
+              </div>
+            </div>
+          </details>
+        </div>
+        <div class="music-actions">
+          <button id="start-mic" class="success" type="button" disabled>Start music reaction<span class="button-caption">Lights will react to your music</span></button>
+          <button id="stop-mic" class="music-stop" type="button" disabled>Stop reaction<span class="button-caption">Stop listening and light reactions</span></button>
+        </div>
+      </section>
+
+    </main>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script type="module" src="assets/js/home.js"></script>
+</body>
+</html>

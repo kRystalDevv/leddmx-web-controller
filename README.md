@@ -1,81 +1,116 @@
 # LEDDMX Web Controller
 
-A responsive browser-based controller for LEDDMX Bluetooth lights.
+A dependency-free static controller for compatible LEDDMX Bluetooth lights.
 
-Control colours, lighting effects, brightness, speed, scenes, and music reactions directly from a compatible browser using the Web Bluetooth API. An advanced controller is also included for direct BLE command testing and native LEDDMX protocol controls.
+Use a Chromium-based browser to control colour, effects, brightness, speed, scenes, power, and music reactions. The advanced page provides lower-level BLE commands for testing.
 
 ## Live Demo
 
 **https://leddmx.63xky.com**
 
-> Web Bluetooth requires a compatible Chromium-based browser and a secure HTTPS connection.
-
 ## Features
 
 - Web Bluetooth connection to LEDDMX devices
-- RGB colour picker with live preview
-- Quick colour presets
-- Lighting effects
-- Speed and brightness controls
-- Power control
+- RGB colour wheel and quick colours
+- Effects, speed, brightness, and power controls
 - Quick scenes
-- Music reaction using microphone or shared system audio
-- Audio sensitivity and smoothing controls
+- Music reaction using microphone or shared audio
 - Responsive desktop and mobile interface
-- Collapsible navigation
-- Connection and command feedback
-- Advanced BLE controller
-- FFE1 and FFE2 write-channel support
-- Native `7B` and `7E` LEDDMX commands
-- Raw hexadecimal BLE command sender
-- Sent-command log
-- Local browser preference storage
-
-## Pages
-
-### Main Controller
-
-`index.html`
-
-The user-friendly controller for normal day-to-day use.
-
-Includes:
-
-- Colour control
-- Scenes
-- Effects
-- Brightness and speed
-- Power
-- Music reaction
-
-### Advanced Controller
-
-`advanced.html`
-
-Provides lower-level access to the LEDDMX Bluetooth protocol.
-
-Includes:
-
-- Write-channel selection
-- Native effect controls
-- DIY model selection
-- Raw BLE frame sender
-- Command history
+- Local browser settings
+- Advanced `7B` and `7E` BLE controls
+- FFE1 / FFE2 write-channel support
+- Raw hexadecimal command sender
+- Command log
+- No frameworks or runtime dependencies
 
 ## Project Structure
 
 ```text
-leddmx-web-controller/
-├── index.html
-├── advanced.html
-├── css/
-│   └── styles.css
-├── js/
-│   ├── bluetooth.js
-│   ├── controller.js
-│   ├── music.js
-│   ├── ui.js
-│   └── advanced.js
-├── assets/
-│   └── ...
-└── README.md
+.
+├── index.html                  Easy controls
+├── advanced.html               Advanced protocol controls
+└── assets
+    ├── css
+    │   ├── shared.css          Shared layout and accessibility rules
+    │   ├── home.css            Easy-controls styles
+    │   └── advanced.css        Advanced-controls styles
+    ├── favicon.svg             Site icon
+    └── js
+        ├── shared.js           Shared Bluetooth and UI utilities
+        ├── home.js             Easy-controls behavior
+        └── advanced.js         Advanced-controls behavior
+```
+
+## Run Locally
+
+Serve the project through localhost instead of opening the HTML files directly.
+
+```powershell
+python -m http.server 8765
+```
+
+Then open:
+
+```text
+http://127.0.0.1:8765/
+```
+
+Use a compatible Chromium-based browser.
+
+Web Bluetooth requires a secure context. Localhost works for development, while production deployments must use HTTPS.
+
+## Deploy
+
+This is a fully static project and can be hosted on GitHub Pages, Cloudflare Pages, Netlify, Vercel, or any HTTPS-capable web server.
+
+Place `index.html` at the site root.
+
+Recommended response headers:
+
+```text
+Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; object-src 'none'; base-uri 'self'; frame-ancestors 'none'
+
+Referrer-Policy: strict-origin-when-cross-origin
+
+X-Content-Type-Options: nosniff
+
+Permissions-Policy: bluetooth=(self), microphone=(self), display-capture=(self)
+```
+
+## Bluetooth
+
+Primary BLE service:
+
+```text
+0000FFE0-0000-1000-8000-00805F9B34FB
+```
+
+Primary write characteristic:
+
+```text
+0000FFE1-0000-1000-8000-00805F9B34FB
+```
+
+Some devices may also expose `FFE2`.
+
+Commands use BLE **write without response**.
+
+## Privacy
+
+Bluetooth commands go directly from the browser to the selected device.
+
+Music Reaction processes microphone or shared playback audio locally. Nothing is uploaded or recorded. Shared playback uses the browser's screen-sharing picker because that is how Chromium grants tab or system audio; the app stops the unused video track immediately after it receives audio.
+
+## Browser Support
+
+Web Bluetooth is currently limited to compatible Chromium-based browsers and operating systems. The controller explains when Bluetooth, secure-context, or audio-capture support is unavailable.
+
+## Disclaimer
+
+This independent project is not affiliated with or endorsed by LEDDMX device manufacturers or the LEDLAMP application. Compatibility was derived from observed BLE traffic; no LEDLAMP code was copied or decompiled.
+
+Protocol behaviour may vary between controller models.
+
+## License
+
+Released under the [MIT License](LICENSE).
