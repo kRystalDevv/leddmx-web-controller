@@ -1,0 +1,84 @@
+<section data-advanced-controls>
+  <div class="intro-strip">
+    XKY LEDDMX compatibility is derived from observed Bluetooth traffic. No LEDLAMP code was copied or decompiled. Commands remain disabled until a compatible light is connected.
+  </div>
+
+  <div class="dashboard-grid">
+    <section class="card">
+      <div class="card-head">
+        <div class="section-icon green" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 1 8 8"/></svg></div>
+        <div><h2>Strip colour</h2><p>Send one solid colour to the whole compatible LED strip.</p></div>
+      </div>
+      <div class="colour-control">
+        <label>Colour<input id="colour" type="color" value="#ff004c" aria-label="Whole-strip colour"></label>
+        <label>Selected colour<div class="colour-preview"><span class="colour-dot" id="colour-dot"></span><span id="colour-hex">#FF004C</span></div></label>
+        <button id="set-colour" class="primary send-button" type="button" data-send-action disabled>Set colour</button>
+      </div>
+      <p class="protocol">7B FF 07 RR GG BB 00 FF BF</p>
+    </section>
+
+    <section class="card">
+      <div class="card-head">
+        <div class="section-icon purple" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24"><path d="M12 3 14 8l5 2-5 2-2 5-2-5-5-2 5-2 2-5Z"/></svg></div>
+        <div><h2>Known 7B effect</h2><p>Run a documented legacy effect by numeric index.</p></div>
+      </div>
+      <div class="field-row two">
+        <label>Effect index (1 to 210)<input id="legacy-effect" type="number" min="1" max="210" value="3" inputmode="numeric"></label>
+        <button id="send-legacy-effect" class="primary send-button" type="button" data-send-action disabled>Start effect</button>
+      </div>
+      <p class="hint">Index <code>3</code> is the seven-colour forward effect from the LEDDMX reference.</p>
+      <p class="protocol">7B FF 03 INDEX FF FF FF FF BF</p>
+    </section>
+
+    <section class="card full">
+      <div class="card-head">
+        <div class="section-icon" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24"><path d="M4 12h16M7 7v10M17 5v14"/></svg></div>
+        <div><h2>Native-app effect engine</h2><p>Edit the observed mode, speed, and brightness bytes directly.</p></div>
+      </div>
+      <div class="field-row four">
+        <label>Mode (0 to 255)<input id="native-mode" type="number" min="0" max="255" value="0" inputmode="numeric"></label>
+        <label>Speed (0 to 255)<input id="native-speed" type="number" min="0" max="255" value="80" inputmode="numeric"></label>
+        <label>Brightness (0 to 255)<input id="native-brightness" type="number" min="0" max="255" value="255" inputmode="numeric"></label>
+        <button id="send-native-effect" class="primary send-button" type="button" data-send-action disabled>Send native effect</button>
+      </div>
+      <p class="hint">Protocol behaviour may vary by controller model.</p>
+      <p class="protocol">7E 0E MODE SPEED BRIGHTNESS FF FF FF EF</p>
+    </section>
+
+    <section class="card full">
+      <div class="card-head">
+        <div class="section-icon orange" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24"><path d="M4 7h16v10H4zM8 11h8M8 14h5"/></svg></div>
+        <div><h2>Native DIY model selector</h2><p>Select a DIY model index, then tune speed and brightness above.</p></div>
+      </div>
+      <div class="field-row two">
+        <label>DIY index (0 to 254)<input id="diy-index" type="number" min="0" max="254" value="0" inputmode="numeric"></label>
+        <button id="send-diy-model" class="primary send-button" type="button" data-send-action disabled>Select DIY model</button>
+      </div>
+      <p class="protocol">7E 03 (INDEX + 1) 00 FF FF FF FF EF</p>
+    </section>
+
+    <section class="card full" id="raw-lab">
+      <div class="card-head">
+        <div class="section-icon orange" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24"><path d="m8 9-4 3 4 3m8-6 4 3-4 3m-2-10-4 14"/></svg></div>
+        <div><h2>Raw command lab</h2><p>Send a validated hexadecimal byte sequence through the selected write channel.</p></div>
+      </div>
+      <label>Bluetooth frame<textarea id="raw-frame" spellcheck="false" aria-label="Raw hexadecimal Bluetooth frame">7E 0E 00 50 FF FF FF FF EF</textarea></label>
+      <div class="raw-actions">
+        <button id="send-raw" class="warn" type="button" data-send-action disabled>Send raw frame</button>
+        <button id="copy-last" type="button" disabled>Copy last sent frame</button>
+      </div>
+      <p class="hint">Use hexadecimal bytes separated by spaces. Frames are validated for byte formatting and the 512-byte Bluetooth packet limit before sending.</p>
+    </section>
+
+    <section class="card full" id="command-log">
+      <div class="card-head">
+        <div class="section-icon gray" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24"><path d="M4 5h16M4 12h16M4 19h10"/></svg></div>
+        <div><h2>Sent-command log</h2><p>A local-session log of frames successfully written to the light.</p></div>
+      </div>
+      <div class="log-shell">
+        <div class="log-toolbar"><span>Newest commands appear first</span><span id="log-count">0 sent</span></div>
+        <div id="log" aria-live="polite">No commands sent yet.</div>
+      </div>
+    </section>
+  </div>
+</section>

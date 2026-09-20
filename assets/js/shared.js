@@ -221,6 +221,7 @@ export function createBluetoothSession({
     connect,
     disconnect,
     connected,
+    canReconnect: () => Boolean(device) || typeof navigator.bluetooth?.getDevices === 'function',
     characteristic,
     hasCharacteristic,
     write,

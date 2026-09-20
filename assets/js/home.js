@@ -39,14 +39,15 @@ import {
   let lastLiveColourAt = 0;
 
   const { setStatus, showToast } = createFeedback();
-  const session = createBluetoothSession({
-    characteristicIds: { ffe1: CHARACTERISTIC_IDS.ffe1 },
+  const connectionListeners = new Set();
+  export const session = createBluetoothSession({
+    characteristicIds: CHARACTERISTIC_IDS,
     requiredCharacteristics: ['ffe1'],
     onDisconnected,
   });
   const deviceName = document.querySelector('#device-name');
 
-  function setDeviceName(name = 'LEDDMX light') {
+  function setDeviceName(name = 'Compatible LEDDMX light') {
     deviceName.textContent = name;
   }
   function setControls(connected) {
@@ -58,6 +59,11 @@ import {
     colour.disabled = false;
     document.querySelectorAll('.swatch, .scene').forEach(button => { button.disabled = false; });
     document.querySelector('#disconnect').disabled = !connected;
+    const reconnectButton = document.querySelector('#reconnect');
+    reconnectButton.disabled = !session.canReconnect();
+    reconnectButton.title = session.canReconnect()
+      ? ''
+      : 'After a fresh load, use Connect because this browser cannot recover previously granted Bluetooth devices.';
     document.querySelector('#start-effect').disabled = !connected;
     document.querySelector('#start-mic').disabled = !connected || Boolean(audioTimer);
     document.querySelector('#stop-mic').disabled = !connected || !audioTimer;
@@ -115,12 +121,19 @@ import {
     setControls(false);
     setDeviceName();
     setStatus('Not connected. You can reconnect the last light without choosing it again.');
+    connectionListeners.forEach(listener => listener(false));
   }
   function finishConnection() {
     setControls(true);
     setDeviceName(session.deviceName);
     setStatus(`Connected to ${session.deviceName}.`, true);
     showToast(`Connected to ${session.deviceName}`);
+    connectionListeners.forEach(listener => listener(true));
+  }
+  export function subscribeConnection(listener) {
+    connectionListeners.add(listener);
+    listener(session.connected());
+    return () => connectionListeners.delete(listener);
   }
   async function connect() {
     const connectButton = document.querySelector('#connect');
@@ -150,7 +163,7 @@ import {
       setStatus(`Reconnect failed: ${errorMessage(error)}`);
       showToast('Reconnect failed', true);
     } finally {
-      reconnectButton.disabled = false;
+      reconnectButton.disabled = !session.canReconnect();
       reconnectButton.removeAttribute('aria-busy');
     }
   }
@@ -537,3 +550,7 @@ import {
   renderColourWheel();
   syncWheelFromColour();
   updateSwatches();
+  window.addEventListener('pagehide', () => {
+    stopMicrophone();
+    session.disconnect();
+  });

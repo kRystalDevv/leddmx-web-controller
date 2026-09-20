@@ -1,46 +1,26 @@
 import {
-  CHARACTERISTIC_IDS,
   copyText,
-  createBluetoothSession,
   createFeedback,
-  createSidebar,
   errorMessage,
   formatHexFrame,
   getRequiredElement,
   parseByte,
   parseColour,
 } from './shared.js';
+import { session, subscribeConnection } from './home.js';
 
 const log = getRequiredElement('#log');
-const writeChannel = getRequiredElement('#write-channel');
-const powerToggle = getRequiredElement('#power-toggle');
-const colour = getRequiredElement('#colour');
-const connectButton = getRequiredElement('#connect');
-const reconnectButton = getRequiredElement('#reconnect');
-const disconnectButton = getRequiredElement('#disconnect');
+const writeChannel = getRequiredElement('#advanced-write-channel');
+const colour = getRequiredElement('#advanced-colour');
 const { setStatus, showToast } = createFeedback();
 
 let lastFrame;
 let logCount = 0;
-let powerOn = false;
-
-const session = createBluetoothSession({
-  characteristicIds: CHARACTERISTIC_IDS,
-  requiredCharacteristics: ['ffe1'],
-  onDisconnected: handleDisconnected,
-});
-const deviceName = getRequiredElement('#device-name');
-
-function setDeviceName(name = 'LEDDMX light') {
-  deviceName.textContent = name;
-}
 
 function setConnected(connected) {
   document.querySelectorAll('[data-send-action]').forEach((element) => {
     element.disabled = !connected;
   });
-  disconnectButton.disabled = !connected;
-  powerToggle.disabled = !connected;
 }
 
 function addLog(label, frame) {
@@ -69,55 +49,9 @@ async function writeFrame(frame, label) {
   addLog(label, frame);
 }
 
-function handleDisconnected() {
-  powerOn = false;
-  powerToggle.setAttribute('aria-pressed', 'false');
-  powerToggle.setAttribute('aria-checked', 'false');
-  setConnected(false);
-  setDeviceName();
-  setStatus('Disconnected. Connect again before sending a command.');
-  showToast('Light disconnected');
-}
-
-function finishConnection() {
+function syncCharacteristics() {
   writeChannel.value = 'ffe1';
   writeChannel.querySelector('[value="ffe2"]').disabled = !session.hasCharacteristic('ffe2');
-  setConnected(true);
-  setDeviceName(session.deviceName);
-  setStatus(`Connected to ${session.deviceName} via FFE1. Native no-response writing is ready.`, true);
-  showToast(`Connected to ${session.deviceName}`);
-}
-
-async function connect() {
-  connectButton.disabled = true;
-  connectButton.setAttribute('aria-busy', 'true');
-  try {
-    setStatus('Choose your LEDDMX light in the Bluetooth picker.');
-    await session.choose();
-    finishConnection();
-  } catch (error) {
-    setStatus(`Connection failed: ${errorMessage(error)}`);
-    showToast('Connection failed', true);
-  } finally {
-    connectButton.disabled = false;
-    connectButton.removeAttribute('aria-busy');
-  }
-}
-
-async function reconnect() {
-  reconnectButton.disabled = true;
-  reconnectButton.setAttribute('aria-busy', 'true');
-  try {
-    setStatus('Reconnecting to the previously allowed light...');
-    await session.reconnect();
-    finishConnection();
-  } catch (error) {
-    setStatus(`Reconnect failed: ${errorMessage(error)}`);
-    showToast('Reconnect failed', true);
-  } finally {
-    reconnectButton.disabled = false;
-    reconnectButton.removeAttribute('aria-busy');
-  }
 }
 
 async function run(label, action) {
@@ -137,23 +71,6 @@ function updateColourPreview() {
   getRequiredElement('#colour-dot').style.background = colour.value;
   getRequiredElement('#colour-hex').textContent = colour.value.toUpperCase();
 }
-
-connectButton.addEventListener('click', connect);
-reconnectButton.addEventListener('click', reconnect);
-disconnectButton.addEventListener('click', () => session.disconnect());
-
-powerToggle.addEventListener('click', async () => {
-  const nextState = !powerOn;
-  const ok = await run(nextState ? 'Power on' : 'Power off', () => writeFrame(
-    [0x7B, 0xFF, 0x04, nextState ? 0x01 : 0x00, 0xFF, 0xFF, 0xFF, 0xFF, 0xBF],
-    nextState ? 'Power on' : 'Power off',
-  ));
-  if (ok) {
-    powerOn = nextState;
-    powerToggle.setAttribute('aria-pressed', String(powerOn));
-    powerToggle.setAttribute('aria-checked', String(powerOn));
-  }
-});
 
 getRequiredElement('#set-colour').addEventListener('click', () => run('Colour', async () => {
   const value = parseColour(colour.value);
@@ -195,9 +112,8 @@ getRequiredElement('#copy-last').addEventListener('click', async () => {
 });
 
 colour.addEventListener('input', updateColourPreview);
-createSidebar({
-  buttonSelector: '#menu-button',
-  storageKey: 'leddmx-advanced-sidebar-collapsed',
-});
 updateColourPreview();
-setConnected(false);
+subscribeConnection((connected) => {
+  setConnected(connected);
+  if (connected) syncCharacteristics();
+});

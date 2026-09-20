@@ -6,6 +6,7 @@
       --purple: #8b52ff;
       --chosen-colour: #ff004c;
     }
+    [hidden] { display: none !important; }
     .icon.sm { width: 18px; height: 18px; }
 
 
@@ -38,15 +39,16 @@
     }
     body.sidebar-collapsed .sidebar { transform: translateX(-100%); opacity: 0; pointer-events: none; }
     .brand { display: flex; gap: 10px; align-items: center; padding: 2px 10px 22px; }
-    .brand-bulb {
+    .brand-bulb, .brand-mark {
       width: 42px; height: 42px; border-radius: 10px;
       display: grid; place-items: center;
       color: var(--blue); background: #f0f6ff;
       box-shadow: inset 0 0 0 1px rgba(22,119,255,.08);
     }
     .brand-bulb .icon { width: 25px; height: 25px; }
-    .brand strong { display: block; font-size: 21px; letter-spacing: -.04em; }
-    .brand small { display: block; color: var(--muted); margin-top: 2px; font-size: 13px; }
+    .brand strong { display: block; font-size: 19px; letter-spacing: -.045em; }
+    .brand-xky { font-size: .72em; letter-spacing: .13em; vertical-align: .08em; }
+    .brand small { display: block; color: var(--muted); margin-top: 2px; font-size: 12px; line-height: 1.35; }
 
     .nav { display: grid; gap: 8px; }
     .nav a {
@@ -62,7 +64,7 @@
     .sidebar-footer {
       padding: 14px 10px 2px;
       color: #86868b;
-      font-size: 11px;
+      font-size: 12px;
       line-height: 1.35;
     }
 
@@ -79,7 +81,7 @@
     }
     .topbar-brand { display: none; align-items: center; gap: 9px; min-width: 0; }
     .topbar-brand strong { display:block; font-size:18px; letter-spacing:-.04em; }
-    .topbar-brand small { display:block; color:#7390ba; margin-top:-1px; font-size:11px; }
+    .topbar-brand small { display:block; color:#7390ba; margin-top:1px; font-size:12px; line-height:1.3; }
     .topbar-spacer { flex: 1; }
     .sidebar-overlay {
       display: none; position: fixed; inset: 0; z-index: 45; border: 0; border-radius: 0;
@@ -260,7 +262,17 @@
     .slider-block { margin-top: 18px; }
     .slider-label { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 7px; font-size: 13px; color: #3a3a3c; font-weight: 600; }
     .slider-label output { color: #1d1d1f; font-variant-numeric: tabular-nums; font-weight: 600; }
-    input[type="range"] { width: 100%; accent-color: #2f8cff; }
+    input[type="range"] {
+      width: 100%; min-height: 28px; margin: 0; cursor: pointer;
+      accent-color: #2f8cff;
+    }
+    input[type="range"]::-webkit-slider-runnable-track { height: 8px; border-radius: 999px; }
+    input[type="range"]::-webkit-slider-thumb {
+      width: 20px; height: 20px; margin-top: -6px; border-radius: 50%;
+      cursor: grab;
+    }
+    input[type="range"]::-moz-range-track { height: 8px; border-radius: 999px; }
+    input[type="range"]::-moz-range-thumb { width: 20px; height: 20px; border-radius: 50%; cursor: grab; }
     .effect-summary {
       margin: 17px 0 12px; padding: 11px 13px; border-radius: var(--radius-control);
       background: #f7f7f8; color: var(--muted); font-size: 12px; border: 1px solid rgba(0,0,0,.075);
@@ -269,12 +281,12 @@
     .action-row > button { flex: 1 1 120px; }
 
     .music-card { margin-top: 14px; }
-    .music-grid { display: grid; grid-template-columns: minmax(220px,.9fr) minmax(280px,1fr) minmax(250px,.95fr); gap: 20px; align-items: stretch; }
+    .music-grid { display: grid; grid-template-columns: minmax(230px, .8fr) minmax(0, 1.2fr); gap: 28px; align-items: stretch; }
     .music-fields { display: grid; gap: 12px; align-content: start; }
     .music-sliders { display: grid; gap: 14px; align-content: start; }
-    .mini-slider { display: grid; grid-template-columns: 140px 1fr 46px; gap: 9px; align-items: center; }
-    .mini-slider label { display: block; font-size: 12px; white-space: nowrap; }
-    .mini-slider output { text-align: right; font-size: 12px; font-weight: 600; }
+    .mini-slider { display: grid; grid-template-columns: minmax(136px, .85fr) minmax(160px, 1.15fr) minmax(70px, auto); gap: 12px; min-height: 44px; align-items: center; }
+    .mini-slider label { display: block; font-size: 12px; white-space: normal; }
+    .mini-slider output { text-align: right; font-size: 12px; font-weight: 600; font-variant-numeric: tabular-nums; }
     .audio-box {
       border: 1px solid rgba(0,0,0,.09); background: #f8f8fa; border-radius: 12px; padding: 15px;
       min-height: 142px; display: flex; flex-direction: column; justify-content: center;
@@ -289,14 +301,20 @@
       background: repeating-linear-gradient(90deg, #26d8bc 0 7px, transparent 7px 13px);
       filter: drop-shadow(0 0 5px rgba(38,216,188,.25));
     }
-    #music-state { margin: 0; color: #6380a1; font-size: 11px; line-height: 1.35; }
+    #music-state { margin: 0; color: #6380a1; font-size: 12px; line-height: 1.4; }
     .music-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 18px; }
     .music-actions button { min-height: 54px; }
-    .button-caption { display: block; font-size: 10px; opacity: .75; margin-top: 2px; font-weight: 500; }
+    .button-caption { display: block; font-size: 12px; opacity: .82; margin-top: 2px; font-weight: 500; }
 
 
-    .device-actions { display: flex; align-items: center; justify-content: flex-end; gap: 12px; flex-wrap: wrap; }
-    .power-control { display: flex; align-items: center; gap: 9px; padding-left: 4px; }
+    .device-actions {
+      display: grid; grid-template-columns: minmax(190px, auto) auto; grid-template-areas: "connection connection" "channel power";
+      align-items: end; justify-items: end; gap: 10px 12px;
+    }
+    .connection-actions { grid-area: connection; }
+    .channel-field { grid-area: channel; min-width: 190px; }
+    #advanced-write-channel-wrap[hidden] + .power-control { grid-column: 1 / -1; }
+    .power-control { grid-area: power; display: flex; min-height: 46px; align-items: center; gap: 9px; padding-left: 0; }
     .power-control > span { font-size: 12px; color: var(--muted); font-weight: 600; }
     .power-toggle {
       width: 50px; min-width: 50px; height: 44px; min-height: 44px; padding: 0; border: 0; border-radius: 999px;
@@ -324,9 +342,9 @@
     .toast.show { opacity: 1; transform: translate(-50%, 0); }
     .toast.error { background: rgba(172,35,52,.95); }
 
-    .music-advanced { display: contents; }
+    .music-advanced { display: block; min-width: 0; }
     .music-advanced > summary { display: none; }
-    .music-advanced-inner { display: grid; grid-template-columns: minmax(280px,1fr) minmax(250px,.95fr); gap: 20px; }
+    .music-advanced-inner { display: grid; grid-template-columns: minmax(230px, 1fr) minmax(220px, .9fr); gap: 24px; height: 100%; }
 
 
 
@@ -335,8 +353,8 @@
       body.sidebar-collapsed .app-shell { grid-template-columns: 0 minmax(0,1fr); }
       .sidebar { padding-inline: 14px; min-width: 190px; }
       .device-render { width: 104px; height: 66px; }
-      .music-grid { grid-template-columns: minmax(220px,.9fr) minmax(0,1.6fr); }
-      .music-advanced-inner { grid-template-columns: 1fr; gap: 14px; }
+      .music-grid { grid-template-columns: minmax(220px, .75fr) minmax(0, 1.25fr); gap: 22px; }
+      .music-advanced-inner { grid-template-columns: minmax(210px, 1fr) minmax(200px, .85fr); gap: 18px; }
       .audio-box { min-height: 110px; }
       .scenes { grid-template-columns: repeat(7, 120px); }
     }
@@ -360,13 +378,13 @@
       .main { padding: 10px 14px 34px; }
       .app-topbar { margin-bottom: 8px; }
       .topbar-brand { display: flex; }
-      .topbar-brand .brand-bulb { width: 38px; height: 38px; border-radius: 9px; }
+      .topbar-brand .brand-bulb, .topbar-brand .brand-mark { width: 38px; height: 38px; border-radius: 9px; }
       .topbar-brand .brand-bulb .icon { width: 22px; height: 22px; }
       .device-card { grid-template-columns: 1fr; gap: 14px; border-radius: var(--radius-card); padding: 16px; }
       .device-info { gap: 13px; }
       .device-render { width: 92px; height: 58px; border-radius: 10px; }
       .device-copy h1 { font-size: 21px; }
-      .device-actions { justify-content: stretch; }
+      .device-actions { grid-template-columns: minmax(180px, 1fr) auto; justify-items: stretch; }
       .connection-actions { justify-content: stretch; flex: 1 1 100%; }
       .connection-actions button { flex: 1 1 30%; min-width: 0; padding-inline: 8px; }
       .section-row { margin-top: 16px; }
@@ -374,7 +392,8 @@
       .scene { min-width: 104px; scroll-snap-align: start; }
       .dashboard-grid { grid-template-columns: 1fr; }
       .colour-layout { grid-template-columns: minmax(170px,.85fr) minmax(180px,1fr); }
-      .music-grid { grid-template-columns: 1fr 1.4fr; }
+      .music-grid { grid-template-columns: 1fr; gap: 18px; }
+      .music-advanced-inner { grid-template-columns: minmax(240px, 1fr) minmax(220px, .85fr); }
       .music-actions { grid-template-columns: 1fr 1fr; }
       #scenes { position: relative; }
       #scenes::after { content: ""; position: absolute; right: -1px; bottom: 3px; width: 32px; height: 86px; pointer-events: none; background: linear-gradient(90deg, transparent, #f5f5f7); }
@@ -387,10 +406,11 @@
       .device-render { width: 82px; height: 54px; }
       .device-copy h1 { font-size: 18px; }
       .device-copy .model { font-size: 12px; }
-      #status { font-size: 11px; line-height: 1.3; }
-      .device-actions { display: grid; grid-template-columns: 1fr; gap: 10px; }
+      #status { font-size: 12px; line-height: 1.35; }
+      .device-actions { grid-template-columns: 1fr; grid-template-areas: "connection" "channel" "power"; gap: 10px; }
       .connection-actions { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 7px; }
       .connection-actions button { min-height: 44px; font-size: 12px; }
+      .channel-field { min-width: 0; }
       .power-control { justify-content: flex-end; }
       .scenes { margin-inline: -10px; padding-inline: 10px; }
       .card { padding: 16px; }
